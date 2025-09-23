@@ -37,7 +37,7 @@ markdown_extensions:
   - pymdownx.details
 
 nav:
-  - Главная: ./index.md
+  - Главная: index.md
   - Лабораторные работы:
     - Лабораторная 1: ./report_1.md
     - Лабораторная 2: ./report_2.md
