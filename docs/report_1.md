@@ -89,10 +89,10 @@ if problem["op"] == 1:
 ### Выполнение
 В этом задании используется сервер, который был написан в заданиях 3-5. Здесь создаётся TCP сервер, который просто отсылает страничку в ответ.
 ```python
-async def task_3():
+def task_3():
     server = Server()
     server.add_route(method_type.GET, "/", send_html_page)
-    await server.serve_forever("", port, connection_type.TCP)
+    server.serve_forever("", port, connection_type.TCP)
 ```
 ```python
 def send_html_page(request):
@@ -109,7 +109,7 @@ def send_html_page(request):
 ### Выполнение
 В этом задании используется сервер, который был написан в заданиях 3-5. Здесь создаётся TCP сервер, который обрабатывает пользователей в многопоточном режиме. Код страницы доступен в файле лабораторной. 
 ```python
-async def task_4():
+def task_4():
     server = Server()
     server.add_route(method_type.POST, "/join", join_route)
     server.add_route(method_type.POST, "/send", send_route)
@@ -117,7 +117,7 @@ async def task_4():
     server.add_route(method_type.GET, "/messages", messages_route)
     server.add_route(method_type.GET, "/", default_route)
     server.add_route(method_type.GET, "/chat.html", default_route)
-    await server.serve_forever("", port, connection_type.TCP)
+    server.serve_forever("", port, connection_type.TCP)
 ```
 ```python
 chats = {}
@@ -222,13 +222,13 @@ def default_route(request):
 ### Выполнение
 В этом задании используется сервер, который был написан в заданиях 3-5. Здесь создаётся TCP сервер, который обрабатывает запросы на добавление оценок и выдаёт списки оценок по дисциплинам. Код страницы доступен в файле лабораторной. 
 ```python
-async def task_5():
+def task_5():
     server = Server()
     server.add_route(method_type.POST, "/add", add_route)
     server.add_route(method_type.GET, "/get", get_route)
     server.add_route(method_type.GET, "/", get_table_route)
     server.add_route(method_type.GET, "/chat.html", get_table_route)
-    await server.serve_forever("", port, connection_type.TCP)
+    server.serve_forever("", port, connection_type.TCP)
 ```
 ```python
 grades = {}
@@ -255,8 +255,6 @@ def get_table_route(request):
 import socket
 import json
 import threading
-import asyncio
-import sys
 from enum import Enum
 
 class connection_type(Enum):
@@ -278,7 +276,7 @@ class Server:
               "PUT" : {},
               "POST" : {}}
     
-    async def serve_forever(self, host : str, port : int, conn_type : connection_type):
+    def serve_forever(self, host : str, port : int, conn_type : connection_type):
         try:
             self.conn_type = conn_type
             if conn_type == connection_type.UDP:
@@ -290,28 +288,26 @@ class Server:
                 self.sock.bind((host, port))
                 self.sock.listen(max_clients)
                 print(f'Server (TCP) is listening at port {port}')
-            if sys.platform == "win32" and sys.version_info >= (3, 8, 0):
-                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-            await self.serve_clients()
+            self.serve_clients()
         except Exception:
             print(Exception)
         return self
 
-    async def serve_clients(self):
+    def serve_clients(self):
         while True:
             if self.conn_type == connection_type.UDP:
                 while True:
                     data, client_address = self.sock.recvfrom(max_data_size)
                     if not data:
                         break
-                    await self.handle_request(data, client_address)
+                    threading.Thread(target=self.handle_request, args=(data, client_address,)).start()
             elif self.conn_type == connection_type.TCP:
                 conn, client_address = self.sock.accept()
                 self.clients[client_address] = conn
                 print(f"New connection {conn}")
-                threading.Thread(target=asyncio.run, args=(self.handle_request(conn, client_address),)).start()
+                threading.Thread(target=self.handle_request, args=(conn, client_address,)).start()
 
-    async def handle_request(self, conn, client_address):
+    def handle_request(self, conn, client_address):
         if self.conn_type == connection_type.UDP:
             code, message = self.parse_request(conn, client_address)
             self.sock.sendto(bytes(str(self.create_response(code, message)).encode('utf-8')), client_address)
