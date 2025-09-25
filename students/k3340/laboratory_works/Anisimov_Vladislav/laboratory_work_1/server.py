@@ -1,8 +1,6 @@
 import socket
 import json
 import threading
-import asyncio
-import sys
 from enum import Enum
 
 class connection_type(Enum):
@@ -24,7 +22,7 @@ class Server:
               "PUT" : {},
               "POST" : {}}
     
-    async def serve_forever(self, host : str, port : int, conn_type : connection_type):
+    def serve_forever(self, host : str, port : int, conn_type : connection_type):
         try:
             self.conn_type = conn_type
             if conn_type == connection_type.UDP:
@@ -36,28 +34,26 @@ class Server:
                 self.sock.bind((host, port))
                 self.sock.listen(max_clients)
                 print(f'Server (TCP) is listening at port {port}')
-            if sys.platform == "win32" and sys.version_info >= (3, 8, 0):
-                asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-            await self.serve_clients()
+            self.serve_clients()
         except Exception:
             print(Exception)
         return self
 
-    async def serve_clients(self):
+    def serve_clients(self):
         while True:
             if self.conn_type == connection_type.UDP:
                 while True:
                     data, client_address = self.sock.recvfrom(max_data_size)
                     if not data:
                         break
-                    await self.handle_request(data, client_address)
+                    threading.Thread(target=self.handle_request, args=(data, client_address,)).start()
             elif self.conn_type == connection_type.TCP:
                 conn, client_address = self.sock.accept()
                 self.clients[client_address] = conn
                 print(f"New connection {conn}")
-                threading.Thread(target=asyncio.run, args=(self.handle_request(conn, client_address),)).start()
+                threading.Thread(target=self.handle_request, args=(conn, client_address,)).start()
 
-    async def handle_request(self, conn, client_address):
+    def handle_request(self, conn, client_address):
         if self.conn_type == connection_type.UDP:
             code, message = self.parse_request(conn, client_address)
             self.sock.sendto(bytes(str(self.create_response(code, message)).encode('utf-8')), client_address)

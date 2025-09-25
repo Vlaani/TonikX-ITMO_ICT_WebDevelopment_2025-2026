@@ -72,10 +72,10 @@ def send_html_page(request):
     file = open("index.html", "r").read()
     return (200, file)
 
-async def task_3():
+def task_3():
     server = Server()
     server.add_route(method_type.GET, "/", send_html_page)
-    await server.serve_forever("", port, connection_type.TCP)
+    server.serve_forever("", port, connection_type.TCP)
 
 class User:
     name : str = ""
@@ -197,7 +197,7 @@ def default_route(request):
     print("Sended page")
     return (200, file)
 
-async def task_4():
+def task_4():
     server = Server()
     server.add_route(method_type.POST, "/join", join_route)
     server.add_route(method_type.POST, "/send", send_route)
@@ -205,7 +205,7 @@ async def task_4():
     server.add_route(method_type.GET, "/messages", messages_route)
     server.add_route(method_type.GET, "/", default_route)
     server.add_route(method_type.GET, "/chat.html", default_route)
-    await server.serve_forever("", port, connection_type.TCP)
+    server.serve_forever("", port, connection_type.TCP)
 
 grades = {}
 
@@ -219,7 +219,6 @@ def add_route(request):
     return (200, "Successfully added")
 
 def get_route(request):
-    #args = request["args"]
     global grades
     return (200, json.dumps(grades))
 
@@ -227,23 +226,12 @@ def get_table_route(request):
     file = open("./table.html", "r").read()
     return (200, file)
 
-async def task_5():
+def task_5():
     server = Server()
     server.add_route(method_type.POST, "/add", add_route)
     server.add_route(method_type.GET, "/get", get_route)
     server.add_route(method_type.GET, "/", get_table_route)
     server.add_route(method_type.GET, "/chat.html", get_table_route)
-    await server.serve_forever("", port, connection_type.TCP)
+    server.serve_forever("", port, connection_type.TCP)
 
-asyncio.run(task_5())
-
-#    global server
- #   global users
-    #users["Vlaani"] = User("Vlaani")
-    #chats["MyChat"] = Chat(set(), list())
-    #users["Vlaani"].chats.add("MyChat")
-    #users["Vlaani"].update_event.set()
-    #chats["MyChat"].messages.append(Message("Vlaani", "testMessage", time.time()))
-    #chats["MyChat"].users.add(users["Vlaani"])
-    #while True:
-    #    server.serve_client(chat_handler)
+task_4()
