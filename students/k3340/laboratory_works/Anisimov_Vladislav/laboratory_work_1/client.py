@@ -15,7 +15,7 @@ def task_1():
 def task_2():
     sock = socket.socket()
     sock.connect(('localhost', 9090))
-    sock.send(json.dumps({"op" : 4, "base":1, "base2": 5, "height":10}).encode("utf-8"))
+    sock.send(json.dumps({"op" : 2, "a":10, "b": 50, "c":100}).encode("utf-8"))
 
     data = sock.recv(max_data_size)
     print(f"Server answered: {data.decode('utf-8')}")
@@ -43,4 +43,4 @@ def task_4():
 
     sock.close()
 
-task_4()
+task_3()

@@ -412,24 +412,15 @@
             }
         }   
 
-        // Функция для определения стиля оценки
         function getAverageClass(avg) {
             if (avg >= 60) return 'done';
             return 'default';
         }
 
-        // Функция для расчета среднего балла
-        function calculateAverage(grades) {
-            const sum = grades.reduce((a, b) => a + b, 0);
-            return (sum / grades.length).toFixed(1);
-        }
-
-        // Функция для определения максимального количества оценок
         function getMaxGradesCount(data) {
             return Math.max(...Object.values(data).map(grades => grades.length));
         }
 
-        // Функция для создания заголовков оценок
         function createGradeHeaders(count) {
             let headers = '<div>Дисциплина</div>';
 
@@ -437,19 +428,15 @@
             return headers;
         }
 
-        // Функция для отрисовки таблицы
         function updateGradesTable(data) {
             const tableHeader = document.getElementById('tableHeader');
             const tableBody = document.getElementById('gradesTable');
             
-            // Определяем максимальное количество оценок
             const maxGrades = getMaxGradesCount(data);
             
-            // Создаем заголовки
             tableHeader.innerHTML = createGradeHeaders(maxGrades);
             tableHeader.style.gridTemplateColumns = `2fr repeat(${maxGrades}, 1fr) 1fr`;
             
-            // Очищаем тело таблицы
             tableBody.innerHTML = '';
 
             Object.entries(data).forEach(([subject, grades], index) => {
@@ -463,7 +450,6 @@
                     sum += number;
                 });
                 
-                // Создаем ячейки для оценок
                 let gradesCells = '';
                 for (let i = 0; i < maxGrades; i++) {
                     if (grades[i] !== undefined) {

@@ -59,13 +59,16 @@ class Server:
             self.sock.sendto(bytes(str(self.create_response(code, message)).encode('utf-8')), client_address)
         elif self.conn_type == connection_type.TCP:
             while True:
-                data = conn.recv(max_data_size)
-                if not data:
-                    print("Connection close")
+                try:
+                    data = conn.recv(max_data_size)
+                    if not data:
+                        print("Connection close")
+                        conn.close()
+                        break
+                    code, message = self.parse_request(data, client_address)
+                    conn.send(bytes(str(self.create_response(code, message)).encode('utf-8')))
+                except:
                     conn.close()
-                    break
-                code, message = self.parse_request(data, client_address)
-                conn.send(bytes(str(self.create_response(code, message)).encode('utf-8')))
 
     def parse_request(self, data, client_address):
         out = {}
@@ -90,12 +93,12 @@ class Server:
                 out["json"] = json.loads(body)
         elif method == 'GET':
             out["method"] = method_type.GET
-            if args:
-                args_dict = {}
-                for arg in args.split("&"):
-                    key, val = arg.split("=")
-                    args_dict[key] = val
-                out["args"] = args_dict
+        if args:
+            args_dict = {}
+            for arg in args.split("&"):
+                key, val = arg.split("=")
+                args_dict[key] = val
+            out["args"] = args_dict
 
         if out["method"] not in self.routes or out["path"] not in self.routes[out["method"]]:
             return (404, "Resource not found")

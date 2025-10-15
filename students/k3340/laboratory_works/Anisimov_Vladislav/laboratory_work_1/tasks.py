@@ -210,12 +210,12 @@ def task_4():
 grades = {}
 
 def add_route(request):
-    args = request["json"]
+    body = request["json"]
     global grades
-    subject = args["subject"]
+    subject = body["subject"]
     if subject not in grades:
         grades[subject] = []
-    grades[subject].append(int(args["grade"]))
+    grades[subject].append(int(body["grade"]))
     return (200, "Successfully added")
 
 def get_route(request):
@@ -234,4 +234,4 @@ def task_5():
     server.add_route(method_type.GET, "/chat.html", get_table_route)
     server.serve_forever("", port, connection_type.TCP)
 
-task_4()
+task_5()

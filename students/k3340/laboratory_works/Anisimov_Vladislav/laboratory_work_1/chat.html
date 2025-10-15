@@ -314,6 +314,14 @@
         let userName = "";
         let chats = {};
         let controller = new AbortController();
+        
+        loop = true;
+        isInitialized = false;
+        
+        window.addEventListener('beforeunload', function (event) {
+            if (isInitialized) { controller.abort(); controller = new AbortController(); }
+            loop = false;
+        });
 
         // Функция для отображения уведомлений
         function showNotification(message, isError = false) {
@@ -325,9 +333,8 @@
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
-        }
+        };
 
-        isInitialized = false;
 
         async function login() {
             const userNameInput = document.getElementById('userName');
@@ -362,7 +369,7 @@
         }
 
         async function startUpdates() {
-            while (true)
+            while (loop)
             {
                 await loadMessages();
                 setTimeout(100);
