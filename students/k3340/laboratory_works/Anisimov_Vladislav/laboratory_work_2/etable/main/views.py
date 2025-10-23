@@ -23,7 +23,7 @@ def table(request):
         
         if selected_subject_id:
             try:
-                selected_subject = subjects.filter(id=selected_subject_id)[0]
+                selected_subject = subjects.get(id=selected_subject_id)
                 assignments = Assignment.objects.filter(subject=selected_subject).order_by('-date_of_issue')
                 solutions = Solution.objects.filter(assignment__subject=selected_subject, student=user)    
 
