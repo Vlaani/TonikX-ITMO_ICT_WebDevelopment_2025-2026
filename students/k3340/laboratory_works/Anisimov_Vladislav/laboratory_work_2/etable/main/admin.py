@@ -38,7 +38,7 @@ class AssignmentAdmin(admin.ModelAdmin):
             return qs
         #if request.user.user_type == "teacher":
         subjects = Subject.objects.filter(teacher=request.user)
-        return qs.filter(pk__in=subjects)
+        return qs.filter(subject__in=subjects)
     
 @admin.register(Solution)
 class SolutionAdmin(admin.ModelAdmin):
@@ -50,5 +50,5 @@ class SolutionAdmin(admin.ModelAdmin):
             return qs
         #if request.user.user_type == "teacher":
         subjects = Subject.objects.filter(teacher=request.user)
-        assignments = Assignment.objects.filter(pk__in=subjects)
-        return qs.filter(pk__in=assignments)
+        assignments = Assignment.objects.filter(subject__in=subjects)
+        return qs.filter(assignment__in=assignments)

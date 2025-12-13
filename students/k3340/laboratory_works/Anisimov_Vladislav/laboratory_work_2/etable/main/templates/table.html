@@ -400,6 +400,13 @@
         .upload-status.loading {
             color: #ff9800;
         }
+
+        .header-row {
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -429,14 +436,14 @@
           <a href="accounts/logout" class="logout-button">Выйти из аккаунта</a>
         </div>
         <div class="main-content">
-           <div class="content-header">
-    <h1>
-        {% if selected_subject %}
-            {{ selected_subject.name }} - Домашние задания
-        {% else %}
-            Все домашние задания
-        {% endif %}
-    </h1>
+           <div class="header-row">
+
+            <div class="class-info">
+                <h2>Класс: {{ user.classname }}</h2>
+            </div>
+            
+{% include "paginator.html"  %}
+        
 </div>
 
 <div class="assignment-list">

@@ -416,7 +416,7 @@
             font-weight: bold;
         }
         thead th {
-            background-color: #cdcdcd;
+            background-color: #f8f9fa;
             position: sticky;
             top: 0;
             z-index: 10;
@@ -450,6 +450,12 @@
             text-decoration: none;
         }    
 
+        .header-row {
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -461,7 +467,7 @@
                 <ul class="subject-list">
                     {% for subject in subjects %}
                     <li class="subject-item {% if subject.id == selected_subject.id %}active{% endif %}" 
-                        onclick="location.href='?subject_id={{ forloop.counter0 }}'">
+                        onclick="location.href='?subject_id={{ forloop.counter }}'">
                         {{ subject.name }}
                     </li>
                     {% endfor %}
@@ -479,8 +485,14 @@
           <a href="/accounts/logout" class="logout-button">Выйти из аккаунта</a>
         </div>
     <div class="main-content">
+        <div class="header-row">
+            <div class="class-info">
                 <h2>Класс: {{ user.classname }}</h2>
-                
+            </div>
+            
+{% include "paginator.html"  %}
+        </div>
+       
                 <table>
                     <thead>
                         <tr>
@@ -496,6 +508,7 @@
                     </thead>
                     <tbody>
                         {% for row in grades_data %}
+                        {% if row.student == user %}
                         <tr>
                             <td class="student-name" {% if row.student == user %} style="background-color: #cdcdcd;" {% endif %}>{{ row.student.full_name }}</td>
                             {% for grade_info in row.grades %}
@@ -527,8 +540,10 @@
                                             -
                                         {% endif %}
                                     </span>
+                                    {% if row.student == user %}
                                     {% if grade_info.link_to_file %}
                                         <a href="{{ grade_info.link_to_file }}" target="_blank" class="file-link" title="Ссылка на работу" style="color: #247ee6;">(решение)</a>
+                                    {% endif %}
                                     {% endif %}
                                 {% else %}
                                     <span class="no-grade">-</span>
@@ -536,6 +551,7 @@
                             </td>
                             {% endfor %}
                         </tr>
+                        {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
