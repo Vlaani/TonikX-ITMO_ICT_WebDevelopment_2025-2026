@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#4" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -446,6 +451,21 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Лабораторная 4
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -458,6 +478,130 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Разработанные интерфейсы
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Разработанные интерфейсы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Регистрация
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вход
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Профиль
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Главная страница
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Автомобили
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Характеристики
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Описания авто
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Персонал
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Клиенты
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Контракты
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -562,9 +706,42 @@
 
 
 
-  <h1>Лабораторная 4</h1>
-
-
+<h1 id="4">Лабораторная работа 4</h1>
+<p>В рамках данной лабораторной работы была создана админ-панель, которая взаимодействует с API (в том числе и с Djoser для аутентификации) написаным в предыдущей лабораторной работе и позволяет управлять системой по аренде авто.</p>
+<h2 id="_1">Разработанные интерфейсы</h2>
+<h3 id="_2">Регистрация</h3>
+<p>Взаимодействует с djoser для создания нового аккаунта и получения токена.   </p>
+<p><img alt="" src="../assets/registration.png" /></p>
+<h3 id="_3">Вход</h3>
+<p>Взаимодействует с djoser для получения токена.</p>
+<p><img alt="" src="../assets/login.png" /></p>
+<h3 id="_4">Профиль</h3>
+<p>Взаимодействует с djoser для получения данных о текущем пользователя по токену. Также есть базовая возможность смены пароля пользователя.</p>
+<p><img alt="" src="../assets/profile.png" /></p>
+<h3 id="_5">Главная страница</h3>
+<p>Даёт возможность перехода на все остальные интерфейсы.   </p>
+<p><img alt="" src="../assets/main.png" /></p>
+<h3 id="_6">Автомобили</h3>
+<p>Загружает данные об 
+автомобилях и поддерживает CRUD операции.   </p>
+<p><img alt="" src="../assets/cars.png" /></p>
+<h3 id="_7">Характеристики</h3>
+<p>Загружает данные о 
+характеристиках автомобилей и поддерживает CRUD операции (с валидацией).   </p>
+<p><img alt="" src="../assets/specs.png" /></p>
+<h3 id="_8">Описания авто</h3>
+<p>Отображает данные об 
+описаниях автомобилей и поддерживает CRUD операции.   </p>
+<p><img alt="" src="../assets/info.png" /></p>
+<h3 id="_9">Персонал</h3>
+<p>Показывает весь персонал компании. Позволяет добавлять сотрудников из существующих аккаунтов.   </p>
+<p><img alt="" src="../assets/workers.png" /></p>
+<h3 id="_10">Клиенты</h3>
+<p>Позволяет управлять клиентами, в том числе и регистрировать новых (взаимодействуя с djoser).   </p>
+<p><img alt="" src="../assets/clients.png" /></p>
+<h3 id="_11">Контракты</h3>
+<p>Интерфейс для управления контрактами (их создание и закрытие).   </p>
+<p><img alt="" src="../assets/contracts.png" /></p>
 
 
 
