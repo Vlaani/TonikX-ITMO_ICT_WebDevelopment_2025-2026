@@ -1,5 +1,9 @@
 # Лабораторная работа 3
 
+## Схема базы данных
+
+![db_scheme](assets/db_scheme.jpg)
+
 ## models.py
 
 ```python

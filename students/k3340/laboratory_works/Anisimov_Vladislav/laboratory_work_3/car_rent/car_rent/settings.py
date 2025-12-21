@@ -41,9 +41,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'core',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -71,8 +75,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'car_rent.wsgi.application'
+CORS_ORIGIN_ALLOW_ALL = True
 
+WSGI_APPLICATION = 'car_rent.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -116,7 +121,7 @@ REST_FRAMEWORK = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

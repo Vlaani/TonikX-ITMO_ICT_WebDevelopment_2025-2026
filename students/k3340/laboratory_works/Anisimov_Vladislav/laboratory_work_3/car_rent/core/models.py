@@ -16,7 +16,7 @@ class TransmissionType(models.TextChoices):
 
 class User(AbstractUser):
     #full_name = models.CharField('Полное имя', max_length=128)
-    passport = models.CharField('Паспортные данные', max_length=32)
+    passport = models.CharField('Паспортные данные', max_length=32, unique=True)
     phone = models.CharField('Телефон', max_length=16)
     
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', 'password', 'phone', 'passport']
@@ -147,7 +147,7 @@ class RentContract(models.Model):
     class Meta:
         verbose_name = 'Договор аренды'
         verbose_name_plural = 'Договоры аренды'
-    
+
     def __str__(self):
         return f"Договор {self.id} - {self.client}"
 

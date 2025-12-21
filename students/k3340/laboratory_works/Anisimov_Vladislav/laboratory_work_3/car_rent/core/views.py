@@ -1,10 +1,12 @@
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import generics, viewsets
 from django.db.models import Count, Max, Sum, F, Q
 from django.db.models.functions import Concat
 from .models import *
 from .serializers import *
+from rest_framework import status
 
 class CarInfoAPIViewSet(viewsets.ModelViewSet):
     serializer_class = CarInfoSerializer
@@ -33,10 +35,24 @@ class ClientAPIViewSet(viewsets.ModelViewSet):
 class WorkerAPIViewSet(viewsets.ModelViewSet):
     serializer_class = WorkerSerializer
     queryset = Worker.objects.all()
+    def destroy(self, request, *args, **kwargs):
+        if (request.user.is_superuser):
+            instance = self.get_object()
+            self.perform_destroy(instance)
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 class RentContractAPIViewSet(viewsets.ModelViewSet):
     serializer_class = RentContractSerializer
     queryset = RentContract.objects.all()
+
+class UserListAPIViewSet(generics.ListAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 class TimesRentedAPIView(APIView):
     def get(self, request):

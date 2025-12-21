@@ -13,9 +13,13 @@ router.register(r'car_crashes', CarCrashAPIViewSet)
 router.register(r'clients', ClientAPIViewSet)
 router.register(r'workers', WorkerAPIViewSet)
 router.register(r'rent_contracts', RentContractAPIViewSet)
+#router.register(r'users', UserAPIViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    #path('users', UserListAPIView.as_view()),
+    path('users/', UserListAPIViewSet.as_view()),
+    path('users/<int:pk>/', UserRetrieveUpdateDestroyAPIView.as_view()),
     path('times_rented', TimesRentedAPIView.as_view()),
     path('days_rented', DaysRentedAPIView.as_view()),
     path('profit_by_car', ProfitByCarAPIView.as_view()),
